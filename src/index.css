@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Theme */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  color: #1f2937;
+  scroll-behavior: smooth;
+}
+
+/* Smooth image loading feel */
+img {
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.02);
+}
+
+/* Buttons consistency */
+button,
+a {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover,
+a:hover {
+  opacity: 0.9;
+}
