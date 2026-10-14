@@ -1,193 +1,124 @@
-import { useState } from "react";
-import ProductCard from "../components/ProductCard";
-import products from "../data/products";
-import { FiSearch, FiFilter } from "react-icons/fi";
-import { GiPlantsAndAnimals } from "react-icons/gi";
-
+import { Link, useSearchParams } from "react-router-dom";
+import { Search, X } from "lucide-react";
+import products, { categories } from "../data/products";
+import { PageMeta, PageIntro, ProductCard } from "../components/UI";
 export default function Products() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-
-  // Get unique categories from products (if categories exist in your data)
-  const categories = [
-    "all",
-    ...new Set(products.map((p) => p.category || "Vegetables")),
-  ];
-
-  // Filter products based on search and category
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
+  const [params, setParams] = useSearchParams();
+  const search = params.get("q") || "";
+  const category = params.get("category") || "";
+  const filtered = products.filter(
+    (p) =>
+      (!category || p.category === category) &&
+      p.name.toLowerCase().includes(search.trim().toLowerCase()),
+  );
+  function update(key, value) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next, { replace: true, preventScrollReset: true });
+  }
   return (
-    <div className="bg-white">
-      {/* Hero Banner Section */}
-      <div className="relative bg-gradient-to-b from-green-50 to-white border-b border-green-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="flex justify-center mb-4">
-              <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center">
-                <GiPlantsAndAnimals className="w-7 h-7 text-[#2E7D32]" />
-              </div>
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-              Our Organic Products
-            </h1>
-            <div className="w-20 h-0.5 bg-[#2E7D32] rounded-full mx-auto mb-5"></div>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
-              Fresh from our farm to your table — 100% chemical-free,
-              sustainably grown in Sammanthurai
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Products Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20">
-        {/* Search and Filter Bar */}
-        <div className="mb-10 md:mb-12">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            {/* Search Input */}
-            <div className="relative w-full sm:max-w-md">
-              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white focus:border-[#2E7D32] focus:ring-1 focus:ring-[#2E7D32] transition-all duration-200 outline-none text-gray-700"
-              />
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <FiFilter className="w-5 h-5 text-gray-400" />
-              {/* <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                      selectedCategory === category
-                        ? "bg-[#2E7D32] text-white shadow-sm"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
-                  >
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </button>
-                ))}
-              </div> */}
-              <div className="w-full sm:w-auto">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="
-                  w-full
-                  sm:w-48
-                  px-4
-                  py-2
-                  rounded-lg
-                  border
-                  border-gray-300
-                  bg-white
-                  text-gray-700
-                  text-sm
-                  font-medium
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-[#2E7D32]
-                "
-                >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Results Count */}
-        <div className="mb-6 flex justify-between items-center">
-          <p className="text-sm text-gray-500">
-            Showing{" "}
-            <span className="font-semibold text-gray-700">
-              {filteredProducts.length}
-            </span>{" "}
-            of{" "}
-            <span className="font-semibold text-gray-700">
-              {products.length}
-            </span>{" "}
-            products
-          </p>
-        </div>
-        {/* Products Grid */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          // Empty State
-          <div className="text-center py-16 md:py-20">
-            <div className="text-6xl mb-4">🌱</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              No products found
-            </h3>
-            <p className="text-gray-400">
-              Try adjusting your search or filter criteria
-            </p>
-            <button
-              onClick={() => {
-                setSearchTerm("");
-                setSelectedCategory("all");
-              }}
-              className="mt-4 px-6 py-2 bg-[#2E7D32] text-white rounded-lg hover:bg-[#1b5e20] transition-colors duration-200"
+    <>
+      <PageMeta
+        title="Our Products"
+        description="Browse plants, fresh produce, herbs, compost, plant care and irrigation equipment from Thurai Organics. Search the catalogue and enquire directly on WhatsApp."
+      />
+      <PageIntro
+        eyebrow="THE THURAI COLLECTION"
+        title={
+          <>
+            For your table.
+            <br />
+            <em>For your growing world.</em>
+          </>
+        }
+      >
+        Explore our produce, plants and agricultural essentials. Ask us for
+        current prices, availability and ordering details.
+      </PageIntro>
+      <section className="wrap catalogue">
+        <div className="filter-bar">
+          <label className="search">
+            <Search size={20} />
+            <span className="sr-only">Search products</span>
+            <input
+              type="search"
+              placeholder="Find something to grow…"
+              value={search}
+              onChange={(e) => update("q", e.target.value)}
+            />
+          </label>
+          <label className="category-select">
+            <span className="sr-only">Product category</span>
+            <select
+              aria-label="Product category"
+              value={category}
+              onChange={(e) => update("category", e.target.value)}
             >
-              Clear filters
+              <option value="">All categories</option>
+              {categories.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div className="catalogue-layout">
+          <aside className="category-sidebar">
+            <h2>Our collections</h2>
+            <button
+              className={!category ? "selected" : ""}
+              onClick={() => update("category", "")}
+            >
+              All products <span>{products.length}</span>
             </button>
-          </div>
-        )}
-
-        {/* Trust Banner */}
-        {filteredProducts.length > 0 && (
-          <div className="mt-16 pt-8 border-t border-gray-100">
-            <div className="bg-green-50 rounded-2xl p-6 md:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-2xl">🚚</span>
-                  <p className="font-medium text-gray-800">Free Delivery</p>
-                  <p className="text-sm text-gray-500">
-                    On orders over LKR 5,000
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-2xl">🌿</span>
-                  <p className="font-medium text-gray-800">100% Organic</p>
-                  <p className="text-sm text-gray-500">
-                    Certified chemical-free
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-2xl">⭐</span>
-                  <p className="font-medium text-gray-800">Customer Love</p>
-                  <p className="text-sm text-gray-500">
-                    4.9/5 from 500+ reviews
-                  </p>
-                </div>
-              </div>
+            {categories.map((c) => (
+              <button
+                key={c}
+                className={category === c ? "selected" : ""}
+                onClick={() => update("category", c)}
+              >
+                {c}
+                <span>{products.filter((p) => p.category === c).length}</span>
+              </button>
+            ))}
+            <div className="sidebar-note">
+              A little help choosing?
+              <p>Talk to us about your garden, farm or next harvest.</p>
+              <Link to="/contact">Get in touch ↗</Link>
             </div>
+          </aside>
+          <div>
+            <div className="results-line">
+              <p role="status">
+                {filtered.length}{" "}
+                {filtered.length === 1 ? "product" : "products"}
+                {category ? ` in ${category}` : " to explore"}
+              </p>
+              {(search || category) && (
+                <button className="clear-button" onClick={() => setParams({})}>
+                  <X size={15} />
+                  Clear filters
+                </button>
+              )}
+            </div>
+            {filtered.length ? (
+              <div className="product-grid">
+                {filtered.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            ) : (
+              <div className="empty">
+                <h2>No matching products yet.</h2>
+                <p>Try a shorter name or explore another category.</p>
+                <button className="button" onClick={() => setParams({})}>
+                  Show all products
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
-    </div>
+    </>
   );
 }

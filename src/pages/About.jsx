@@ -1,81 +1,101 @@
-import { GiPlantSeed } from "react-icons/gi";
-import { PiPlantFill } from "react-icons/pi";
-
+import { media, mission, vision } from "../data/site";
+import {
+  PageMeta,
+  PageIntro,
+  Eyebrow,
+  Values,
+  ContactCTA,
+} from "../components/UI";
 export default function About() {
   return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-b from-green-50 to-white border-b border-green-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-16 lg:py-20">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="flex justify-center mb-4">
-              <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center">
-                <GiPlantSeed className="w-6 h-6 text-[#2E7D32]" />
-              </div>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-              About Us
+    <>
+      <PageMeta
+        title="Our Story"
+        description="Meet Thurai Organics, an organic farming and agricultural solutions company in Sammanthurai, Eastern Province, Sri Lanka. Read our mission and vision."
+      />
+      <PageIntro
+        eyebrow="OUR STORY"
+        title={
+          <>
+            Rooted here.
+            <br />
+            <em>Growing for tomorrow.</em>
+          </>
+        }
+      >
+        Organic farming. Healthy living. A shared commitment to a greener
+        future.
+      </PageIntro>
+      <section className="wrap about-image">
+        <img
+          src={media("images/optimized/coverPic.webp")}
+          width="899"
+          height="600"
+          alt="Thurai Organics entrance in Sammanthurai"
+        />
+        <span>THURAI ORGANICS · SAMMANTHURAI, SRI LANKA</span>
+      </section>
+      <section className="section wrap about-intro">
+        <Eyebrow>WHO WE ARE</Eyebrow>
+        <div>
+          <h2>
+            From our soil
+            <br />
+            to your everyday life.
+          </h2>
+          <p>
+            Thurai Organics is a Sri Lankan organic farming and agricultural
+            solutions company based in Sammanthurai, Eastern Province. We
+            produce and supply fresh organic fruits, vegetables, herbs, compost,
+            organic pesticides, plants, and garden and farm solutions.
+          </p>
+          <p>
+            We serve households, farmers and agricultural businesses with a
+            commitment to sustainable agriculture, healthy living and
+            environmentally responsible farming. Our approach to cultivating
+            crops avoids harmful chemicals, synthetic fertilizers, preservatives
+            and artificial additives.
+          </p>
+        </div>
+      </section>
+      <section className="mission-section section">
+        <div className="wrap mission-grid">
+          <div>
+            <Eyebrow>OUR VISION</Eyebrow>
+            <h2>
+              A greener future,
+              <br />
+              grown together.
             </h2>
-
-            <div className="w-20 h-0.5 bg-[#2E7D32] rounded-full mx-auto mb-6"></div>
-
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto">
-              Thurai Organics is built on traditional farming values, focusing
-              on chemical-free cultivation and sustainable agriculture in
-              Sammanthurai, Sri Lanka.
-            </p>
+            <p className="vision">{vision}</p>
+          </div>
+          <div>
+            <Eyebrow>OUR MISSION</Eyebrow>
+            <ol className="mission-list">
+              {mission.map((m, i) => (
+                <li key={m}>
+                  <span>0{i + 1}</span>
+                  {m}
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
-      </div>
-
-      {/* Image Card */}
-      <div className="py-2 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 bg-white border border-gray-100">
-        <img
-          src="/images/coverPic.jpg"
-          alt="Organic farm landscape in Sammanthurai, Sri Lanka"
-          className="w-full h-auto  object-cover aspect-video md:aspect-[21/9]"
-        />
-        <div className="p-4 md:p-5 bg-white border-t border-gray-50">
-          <p className="text-sm text-gray-400 flex items-center gap-2">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2E7D32]"></span>
-            Our heritage farm in Sammanthurai — chemical-free since day one
+      </section>
+      <section className="section wrap">
+        <Eyebrow>OUR VALUES IN PRACTICE</Eyebrow>
+        <h2>Care at every stage.</h2>
+        <Values />
+        <div className="sustainability">
+          <h3>Growing with the environment in mind.</h3>
+          <p>
+            Natural biodegradable materials are central to our compost and
+            organic solutions. Our work supports soil care, responsible growing
+            practices and home gardening within local communities.
           </p>
         </div>
-      </div>
-
-      {/* Trust Indicators */}
-      <div className="my-12 md:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6">
-        <div className="group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
-          <PiPlantFill className="w-8 h-8 text-[#2E7D32] mb-3" />
-          <h3 className="font-semibold text-gray-800 text-lg mb-1">
-            100% Chemical-Free
-          </h3>
-          <p className="text-sm text-gray-400 leading-relaxed">
-            Traditional composting & natural pest control methods
-          </p>
-        </div>
-
-        <div className="group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
-          <PiPlantFill className="w-8 h-8 text-[#2E7D32] mb-3" />
-          <h3 className="font-semibold text-gray-800 text-lg mb-1">
-            Sustainably Grown
-          </h3>
-          <p className="text-sm text-gray-400 leading-relaxed">
-            Regenerative practices for future generations
-          </p>
-        </div>
-
-        <div className="group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
-          <PiPlantFill className="w-8 h-8 text-[#2E7D32] mb-3" />
-          <h3 className="font-semibold text-gray-800 text-lg mb-1">
-            Farmer-First
-          </h3>
-          <p className="text-sm text-gray-400 leading-relaxed">
-            Direct support to local Sammanthurai growers
-          </p>
-        </div>
-      </div>
-    </div>
+      </section>
+      <ContactCTA />
+    </>
   );
 }

@@ -1,117 +1,258 @@
 import { Link } from "react-router-dom";
-import Hero from "../components/Hero";
-import SectionTitle from "../components/SectionTitle";
-import TestimonialCard from "../components/TestimonialCard";
-import ProductCard from "../components/ProductCard";
-import products from "../data/products";
-
+import { ArrowUpRight, ArrowDown } from "lucide-react";
+import products, { categories } from "../data/products";
+import { media } from "../data/site";
+import {
+  HeroVideo,
+  Eyebrow,
+  ArrowButton,
+  SectionHeading,
+  ProductCard,
+  Values,
+  ContactCTA,
+  PageMeta,
+} from "../components/UI";
+const categoryPhotos = [
+  "Golden Watermelon",
+  "Mango Saplings",
+  "Mint Plant",
+  "Red Rose Plants",
+  "Thurai Fruit Plant Booster",
+  "Vermicompost",
+  "Drip Irrigation System",
+];
 export default function Home() {
   return (
-    <div className="bg-white">
-      <Hero />
-
-      {/* Featured Products Section */}
-      <section className="max-w-6xl mx-auto py-16 md:py-20 lg:py-24 px-4 sm:px-6">
-        <SectionTitle
-          title="Featured Organic Produce"
-          subtitle="Fresh harvest directly from our farm"
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-10">
-          {products.slice(0, 3).map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+    <>
+      <PageMeta
+        title="Rooted in Nature. Grown with Care."
+        description="Discover fresh produce, plants, herbs and farm and garden solutions from Thurai Organics in Sammanthurai, Sri Lanka."
+      />
+      <section className="hero">
+        <HeroVideo />
+        <div className="hero-shade" />
+        <div className="wrap hero-content">
+          <Eyebrow>THURAI ORGANICS — SRI LANKA</Eyebrow>
+          <h1>
+            Rooted in Nature.
+            <br />
+            <em>Grown with Care.</em>
+          </h1>
+          <p>
+            Discover naturally grown produce, healthy plants, and thoughtfully
+            selected agricultural solutions from Thurai Organics.
+          </p>
+          <div className="button-row">
+            <ArrowButton to="/products" className="ivory">
+              Explore our products
+            </ArrowButton>
+            <Link to="/about" className="hero-story">
+              Discover our story <ArrowUpRight size={18} />
+            </Link>
+          </div>
         </div>
-
-        {/* Optional subtle view more link */}
-        <div className="text-center mt-10 md:mt-12">
-          <Link
-            to="/products"
-            className="inline-flex items-center gap-2 text-[#2E7D32] font-medium hover:text-[#1b5e20] transition-colors duration-200 group"
-          >
-            <span>View All Products</span>
-            <span className="group-hover:translate-x-1 transition-transform duration-200">
-              →
-            </span>
+        <div className="hero-bottom wrap">
+          <span>SAMMANTHURAI · EASTERN PROVINCE</span>
+          <a href="#welcome">
+            A little closer to nature <ArrowDown size={15} />
+          </a>
+        </div>
+      </section>
+      <div className="nature-strip">
+        <span>Fresh, seasonal produce</span>
+        <i>✦</i>
+        <span>Plants for every growing space</span>
+        <i>✦</i>
+        <span>Thoughtful farm & garden solutions</span>
+      </div>
+      <section id="welcome" className="section wrap intro-split">
+        <div className="editorial-photo">
+          <img
+            src={media("images/optimized/coverPic.webp")}
+            alt="Entrance to Thurai Organics in Sammanthurai"
+            width="899"
+            height="600"
+            loading="lazy"
+          />
+          <span className="image-note">Our roots, here in Sammanthurai.</span>
+        </div>
+        <div className="intro-copy">
+          <Eyebrow>WELCOME TO THURAI ORGANICS</Eyebrow>
+          <h2>
+            Good things begin
+            <br />
+            with <em>healthy roots.</em>
+          </h2>
+          <p>
+            We are a Sri Lankan organic farming and agricultural solutions
+            company with a simple purpose: to bring people closer to nature
+            through what they eat and what they grow.
+          </p>
+          <p>
+            From fresh fruits and herbs to nursery plants, organic compost and
+            irrigation essentials, we bring together the needs of households,
+            farmers and agricultural businesses.
+          </p>
+          <Link className="text-link" to="/about">
+            Get to know us <ArrowUpRight size={19} />
           </Link>
         </div>
       </section>
-
-      {/* Why Choose Us Section - Soft organic green background */}
-      <section className="bg-gradient-to-b from-green-50 to-white py-16 md:py-20 lg:py-24 px-4 sm:px-6 border-y border-green-100">
-        <SectionTitle
-          title="Why Choose Thurai Organics"
-          subtitle="Pure farming, trusted quality, natural growth"
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-10">
-          {[
-            {
-              emoji: "🌱",
-              title: "100% Organic",
-              desc: "Certified chemical-free farming",
-            },
-            {
-              emoji: "🥬",
-              title: "Fresh Harvest",
-              desc: "Picked at peak ripeness",
-            },
-            {
-              emoji: "🚫",
-              title: "No Chemicals",
-              desc: "Pure traditional methods",
-            },
-            {
-              emoji: "🇱🇰",
-              title: "Local Sri Lankan Farm",
-              desc: "Supporting Sammanthurai growers",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="group bg-white rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200"
-            >
-              <div className="text-4xl mb-3">{item.emoji}</div>
-              <div className="font-semibold text-gray-800 text-lg mb-1">
-                {item.title}
-              </div>
-              <p className="text-sm text-gray-400">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="max-w-6xl mx-auto py-16 md:py-20 lg:py-24 px-4 sm:px-6">
-        <SectionTitle
-          title="What Customers Say"
-          subtitle="Trusted by families across Sri Lanka"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-8 md:mt-10">
-          <TestimonialCard
-            name="Nimal Perera"
-            text="Best organic vegetables I've ever bought locally. The freshness is unmatched!"
-          />
-          <TestimonialCard
-            name="Ayesha Fernando"
-            text="Super fresh and delivered fast. Highly recommended for anyone looking for quality."
-          />
-          <TestimonialCard
-            name="Rashid Ismail"
-            text="Feels like real farm-to-table quality. Will definitely order again."
-          />
-        </div>
-
-        {/* Trust badge */}
-        <div className="text-center mt-10 md:mt-12 pt-6 border-t border-gray-100">
-          <div className="inline-flex items-center gap-2 text-sm text-gray-400">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2E7D32]"></span>
-            Join 1,000+ happy families
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2E7D32]"></span>
+      <section className="section category-section">
+        <div className="wrap">
+          <SectionHeading
+            eyebrow="FROM OUR WORLD TO YOURS"
+            title="Something good for every garden."
+            link="/products"
+          >
+            Explore fresh flavours, living plants and the essentials that help
+            them grow.
+          </SectionHeading>
+          <div className="category-grid">
+            {categories.map((cat, i) => (
+              <Link
+                className="category-card"
+                key={cat}
+                to={`/products?category=${encodeURIComponent(cat)}`}
+              >
+                <img
+                  src={media(
+                    products.find((p) => p.name === categoryPhotos[i])
+                      .images[0],
+                  )}
+                  loading="lazy"
+                  alt=""
+                  width="500"
+                  height="500"
+                />
+                <div>
+                  <small>0{i + 1}</small>
+                  <h3>{cat}</h3>
+                  <ArrowUpRight size={22} />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
-    </div>
+      <section className="section wrap">
+        <SectionHeading
+          eyebrow="A FEW FAVOURITES"
+          title="Fresh finds. New beginnings."
+          link="/products"
+        />
+        <div className="product-grid featured">
+          {[
+            "golden-watermelon",
+            "mango-saplings",
+            "thurai-fruit-plant-booster",
+            "red-rose-plants",
+          ].map((id) => (
+            <ProductCard key={id} product={products.find((p) => p.id === id)} />
+          ))}
+        </div>
+      </section>
+      <section className="story-band">
+        <div className="wrap story-inner">
+          <Eyebrow>OUR PURPOSE</Eyebrow>
+          <h2>
+            A healthier way to grow.
+            <br />
+            <em>A greener future to share.</em>
+          </h2>
+          <p>
+            Our commitment is to sustainable agriculture, healthy living and
+            environmentally responsible farming. We encourage home gardening and
+            organic growing within our local communities.
+          </p>
+          <Link to="/about" className="text-link">
+            Our mission & vision <ArrowUpRight size={18} />
+          </Link>
+        </div>
+        <span className="story-mark" aria-hidden="true">
+          ❧
+        </span>
+      </section>
+      <section className="section wrap solutions-teaser">
+        <div>
+          <Eyebrow>BEYOND THE HARVEST</Eyebrow>
+          <h2>
+            Everything starts
+            <br />
+            with the right care.
+          </h2>
+          <p>
+            Build a garden, nourish your soil or plan your watering. Our
+            agricultural range brings the essentials together.
+          </p>
+          <ArrowButton to="/solutions">Farm & garden solutions</ArrowButton>
+        </div>
+        <div className="solution-lines">
+          {[
+            [
+              "01",
+              "Plants with potential",
+              "Fruit, vegetable, herbal and flowering plants.",
+              "Plants & Saplings",
+            ],
+            [
+              "02",
+              "Better beginnings in the soil",
+              "Compost, growing media and plant nutrition.",
+              "Compost & Soil Care",
+            ],
+            [
+              "03",
+              "Water where it matters",
+              "Irrigation equipment for your growing space.",
+              "Garden & Farm Equipment",
+            ],
+          ].map(([n, t, d, c]) => (
+            <Link key={n} to={`/products?category=${encodeURIComponent(c)}`}>
+              <span>{n}</span>
+              <div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </div>
+              <ArrowUpRight size={22} />
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="section values-section">
+        <div className="wrap">
+          <SectionHeading
+            eyebrow="THE THURAI APPROACH"
+            title="Rooted in what matters."
+          />
+          <Values />
+        </div>
+      </section>
+      <section className="section wrap farm-teaser">
+        <div>
+          <Eyebrow>OUR FARM, OUR ROOTS</Eyebrow>
+          <h2>
+            A little closer
+            <br />
+            to the source.
+          </h2>
+          <p>
+            Meet Thurai Organics through our supplied farm film and a view of
+            our entrance in Sammanthurai.
+          </p>
+          <Link className="text-link" to="/gallery">
+            Visit our farm gallery <ArrowUpRight size={19} />
+          </Link>
+        </div>
+        <img
+          src={media("images/optimized/farm-poster.webp")}
+          alt="Still from the supplied Thurai Organics farm film"
+          loading="lazy"
+          width="1280"
+          height="720"
+        />
+      </section>
+      <ContactCTA />
+    </>
   );
 }
